@@ -1,9 +1,7 @@
-import { Mode } from "fs";
 
 export interface ModelMessage {
     type: string
 }
-
 
 export interface ProjectModelMessage {
     hostname: string,
@@ -38,4 +36,17 @@ export interface LanguageModelMessage {
     name: string,
     version: string,
     metadata: ModelMessage
+}
+
+export type availableTypes = "project" | "application" | "database" | "language" | "environment"
+
+export class GithubClient {
+    private devKey: string
+    constructor(key: string) {
+        this.devKey = key
+    }
+
+    public getDevKey(){
+        return this.devKey
+    }
 }

@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: ./images/Dockerfile
+    command: {{start_command}}
+    ports: 
+      - "{{ports}}"
+    {% if has_db %}
+    links:
+        - db
+    {% endif %}
+    {% if has_db %}
+    db:
+        image: {% db_image %}
+        ports:
+            - "{{db_ports}}"
+    {% endif %}
