@@ -1,3 +1,6 @@
+import { TypedEmitter } from 'tiny-typed-emitter';
+// import { Octokit } from '@octokit/rest';
+const exec = require('child_process').exec;
 
 export interface ModelMessage {
     type: string
@@ -40,13 +43,36 @@ export interface LanguageModelMessage {
 
 export type availableTypes = "project" | "application" | "database" | "language" | "environment"
 
-export class GithubClient {
+export interface GithubClientEvents {
+    "downloadFinished": (stdout:string, stderr:string) => void,
+    "error": (err:Error) => void
+}
+
+export class GithubClient extends TypedEmitter<GithubClientEvents> {
     private devKey: string
+    // private githubOctoClient: Octokit
+    public events: TypedEmitter<GithubClientEvents>
     constructor(key: string) {
+        super()
         this.devKey = key
+        this.events = new TypedEmitter<GithubClientEvents>()
+        // this.githubOctoClient = new Octokit({ auth: this.devKey })
+        // console.log(this.githubOctoClient)
     }
 
     public getDevKey(){
         return this.devKey
+    }
+
+    public downloadRepo(url:string, path:string){
+        exec(`cd ${path} && git clone ${url} .`, (err:Error, stdout:string, stderr:string) => {
+            if (err) {
+                this.events.emit("error", err)
+                return
+            } else {
+                this.events.emit("downloadFinished", stdout, stderr)
+                return
+            }
+        })
     }
 }

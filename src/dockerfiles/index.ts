@@ -68,3 +68,9 @@ export const buildDockerCompose = function(env: EnvironmentModelMessage) {
 
     return contents
 }
+
+export const buildVagrant = function(hostname: string){
+    const template = fs.readFileSync(__dirname + "/Vagrantfile.njk").toString()
+    const contents = Nunjucks.renderString(template, { "hostname": hostname})
+    return contents
+}

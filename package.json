@@ -46,16 +46,21 @@
   ],
   "dependencies": {
     "@nano-sql/core": "^2.3.7",
+    "@octokit/rest": "^18.12.0",
     "@types/jest": "^27.0.3",
     "@types/mocha": "^9.0.0",
     "@types/nedb": "^1.8.12",
     "@types/node": "^16.11.9",
     "@types/nunjucks": "^3.2.0",
+    "adm-zip": "^0.5.9",
+    "axios": "^0.24.0",
     "fs-extra": "^10.0.0",
     "mock-fs": "^5.1.2",
     "nedb": "^1.8.0",
     "node-json-db": "^1.4.1",
     "nunjucks": "^3.2.3",
+    "requets": "0.0.1-security",
+    "tiny-typed-emitter": "^2.1.0",
     "tslib": "^2.3.1"
   },
   "jest": {

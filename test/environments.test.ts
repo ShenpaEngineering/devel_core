@@ -364,7 +364,12 @@ describe('Environment resource functions', () => {
                 "source_folder": "//path/to/folder",
                 "variables": ""
             }
-            let result = Client.environments.buildEnvironmentFolder('test dockerfile contents', 'test docker compose contents', 'github.com/repo/example', __dirname + "/env", env)
+            let result = Client.environments.buildEnvironmentFolder(
+                'test dockerfile contents', 
+                'test docker compose contents', 
+                __dirname + "/env", 
+                env,
+                "example.local")
             expect(result).toEqual(true)
             expect(fs.lstatSync(__dirname + "/env/denv.rc", { throwIfNoEntry: false})).not.toBe(undefined)
         })
@@ -392,9 +397,113 @@ describe('Environment resource functions', () => {
                 "source_folder": "//path/to/folder",
                 "variables": ""
             }
-            let result = Client.environments.buildEnvironmentFolder('test dockerfile contents', 'test docker compose contents', 'github.com/repo/example', __dirname + "/env", env)
+            let result = Client.environments.buildEnvironmentFolder(
+                'test dockerfile contents', 
+                'test docker compose contents', 
+                __dirname + "/env", 
+                env,
+                "example.local")
             expect(result).toEqual(true)
             expect(fs.lstatSync(__dirname + "/env/images/Dockerfile", {throwIfNoEntry: false})).not.toBe(undefined)     
+        })
+
+        it('should create a Vagrantfile in the folder', () => {
+            let env = {
+                "metadata": { "type": "environmnent"},
+
+                "application": {
+                    "metadata": { "type": "application"},
+                    "name": "Express",
+                    "version": "1.0x"
+                },
+                "language": {
+                    "metadata": { "type": "language"},
+                    "name": "Foobar",
+                    "version": "14.3"
+                },
+                "database": {
+                    "metadata": { "type": "database"},
+                    "name": "Redis",
+                    "version": "6"
+                },
+                "docker_env_file": "//path/to/file",
+                "source_folder": "//path/to/folder",
+                "variables": ""
+            }
+            let result = Client.environments.buildEnvironmentFolder(
+                'test dockerfile contents', 
+                'test docker compose contents', 
+                __dirname + "/env", 
+                env,
+                "example.local")
+            expect(result).toEqual(true)
+            expect(fs.lstatSync(__dirname + "/env/Vagrantfile", {throwIfNoEntry: false})).not.toBe(undefined)     
+        })
+
+        it('should create a "src" folder', () => {
+            let env = {
+                "metadata": { "type": "environmnent"},
+
+                "application": {
+                    "metadata": { "type": "application"},
+                    "name": "Express",
+                    "version": "1.0x"
+                },
+                "language": {
+                    "metadata": { "type": "language"},
+                    "name": "Foobar",
+                    "version": "14.3"
+                },
+                "database": {
+                    "metadata": { "type": "database"},
+                    "name": "Redis",
+                    "version": "6"
+                },
+                "docker_env_file": "//path/to/file",
+                "source_folder": "//path/to/folder",
+                "variables": ""
+            }
+            let result = Client.environments.buildEnvironmentFolder(
+                'test dockerfile contents', 
+                'test docker compose contents', 
+                __dirname + "/env", 
+                env,
+                "example.local")
+            expect(result).toEqual(true)
+            expect(fs.lstatSync(__dirname + "/env/src", {throwIfNoEntry: false})).not.toBe(undefined)     
+        })
+
+        it('should create a docker-compose.yml file', () => {
+            let env = {
+                "metadata": { "type": "environmnent"},
+
+                "application": {
+                    "metadata": { "type": "application"},
+                    "name": "Express",
+                    "version": "1.0x"
+                },
+                "language": {
+                    "metadata": { "type": "language"},
+                    "name": "Foobar",
+                    "version": "14.3"
+                },
+                "database": {
+                    "metadata": { "type": "database"},
+                    "name": "Redis",
+                    "version": "6"
+                },
+                "docker_env_file": "//path/to/file",
+                "source_folder": "//path/to/folder",
+                "variables": ""
+            }
+            let result = Client.environments.buildEnvironmentFolder(
+                'test dockerfile contents', 
+                'test docker compose contents', 
+                __dirname + "/env", 
+                env,
+                "example.local")
+            expect(result).toEqual(true)
+            expect(fs.lstatSync(__dirname + "/env/docker-compose.yml", {throwIfNoEntry: false})).not.toBe(undefined)     
         })
     })
     
