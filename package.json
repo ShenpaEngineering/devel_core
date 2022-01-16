@@ -1,5 +1,5 @@
 {
-  "version": "0.1.14",
+  "version": "0.1.16",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -12,10 +12,9 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build && cp ./src/dockerfiles/docker-compose.njk ./dist/docker-compose.njk && cp ./src/dockerfiles/dockerfile-node.njk ./dist/dockerfile-node.njk && cp ./src/dockerfiles/Vagrantfile.njk ./dist/Vagrantfile.njk",
+    "publish": "tsdx build && cp ./src/dockerfiles/docker-compose.njk ./dist/docker-compose.njk && cp ./src/dockerfiles/dockerfile-node.njk ./dist/dockerfile-node.njk && cp ./src/dockerfiles/Vagrantfile.njk ./dist/Vagrantfile.njk",
     "test": "tsdx test",
     "lint": "yarn lint",
-    "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
