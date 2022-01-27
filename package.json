@@ -1,5 +1,5 @@
 {
-  "version": "0.1.28",
+  "version": "0.1.31",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -12,6 +12,7 @@
   },
   "scripts": {
     "start": "tsdx watch",
+    "build": "tsdx build && cp ./src/dockerfiles/docker-compose.njk ./dist/docker-compose.njk && cp ./src/dockerfiles/dockerfile-node.njk ./dist/dockerfile-node.njk && cp ./src/dockerfiles/Vagrantfile.njk ./dist/Vagrantfile.njk",
     "prepare": "tsdx build && cp ./src/dockerfiles/docker-compose.njk ./dist/docker-compose.njk && cp ./src/dockerfiles/dockerfile-node.njk ./dist/dockerfile-node.njk && cp ./src/dockerfiles/Vagrantfile.njk ./dist/Vagrantfile.njk",
     "test": "tsdx test",
     "lint": "yarn lint",
@@ -30,7 +31,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "devtool_lib",
+  "name": "@local/devtool_lib",
   "author": "Shariq Torres",
   "module": "dist/devtool_lib.esm.js",
   "size-limit": [
