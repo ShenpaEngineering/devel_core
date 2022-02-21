@@ -9,13 +9,3 @@ services:
      - './src/:/app/:rw'
     ports: 
       - "{{ports}}"
-    {% if has_db %}
-    links:
-        - db
-    {% endif %}
-    {% if has_db %}
-    db:
-        image: {{ db_image }}
-        ports:
-            - "{{db_ports}}"
-    {% endif %}
