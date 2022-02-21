@@ -38,9 +38,6 @@ export const buildPostinstallScript = function(env: EnvironmentModelMessage) {
 }
 export const buildDockerCompose = function(env: EnvironmentModelMessage) {
     let start_command = 'node server.js';
-    let has_db = false
-    let db_ports = "3306:3306"
-    let db_image = "mysql"
     let ports = "3000:3000"
     switch(env.language?.name) {
         case 'Node':
@@ -56,28 +53,8 @@ export const buildDockerCompose = function(env: EnvironmentModelMessage) {
             return new Error("We don't suppor that language")
     }
 
-    if (env.database != undefined ){
-        has_db = true
-        switch(env.database.name) {
-            case 'MySQL':
-                db_image = 'mysql:' + env.database.version
-                db_ports = "3306:3306"
-            break; 
-            case 'Postgres':
-                db_image = 'postgres:' + env.database.version
-                db_ports = "5432:5432"
-            break;
-            case 'MongoDB':
-                db_image = 'mongo:' + env.database.version
-                db_ports = "27017:27017"
-            break;
-        }
-    }
     let contentInfo = {
         start_command,
-        db_ports,
-        db_image,
-        has_db,
         ports
     }
     let template = fs.readFileSync(__dirname + "/docker-compose.njk").toString()
@@ -85,9 +62,3 @@ export const buildDockerCompose = function(env: EnvironmentModelMessage) {
 
     return contents
 }
-
-// export const buildVagrant = function(hostname: string){
-//     let template = fs.readFileSync(__dirname + "/Vagrantfile.njk").toString()
-//     const contents = Nunjucks.renderString(template, { "hostname": hostname})
-//     return contents
-// }
