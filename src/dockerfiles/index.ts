@@ -2,7 +2,7 @@ import { EnvironmentModelMessage } from "../types";
 import Nunjucks from "nunjucks"
 import fs from 'fs'
 
-function NodeEnv (vnum:(string)){
+function NodeEnv(vnum:(string)){
     let contents = fs.readFileSync(__dirname + "/dockerfile-node.njk")
     return Nunjucks.renderString(contents.toString(), {version: vnum})
 }
@@ -20,12 +20,28 @@ export const buildDockerfile = function(env: EnvironmentModelMessage){
     return fileContents
 }
 
+export const buildQEMUConfig = function(sourcePath: string) {
+    let contentInfo = {
+        sourcePath
+    }
+    let template = fs.readFileSync(__dirname + "/qemu-config.njk").toString()
+    let contents = Nunjucks.renderString(template, contentInfo)
+    return contents
+}
+export const buildPostinstallScript = function(env: EnvironmentModelMessage) {
+    let contentInfo = {
+        language: env.language?.name
+    }
+    let template = fs.readFileSync(__dirname + "/postinstall.njk").toString()
+    let fileContents = Nunjucks.renderString(template, contentInfo)
+    return fileContents
+}
 export const buildDockerCompose = function(env: EnvironmentModelMessage) {
     let start_command = 'node server.js';
     let has_db = false
     let db_ports = "3306:3306"
     let db_image = "mysql"
-    
+    let ports = "3000:3000"
     switch(env.language?.name) {
         case 'Node':
             start_command = 'node server.js'
@@ -61,7 +77,8 @@ export const buildDockerCompose = function(env: EnvironmentModelMessage) {
         start_command,
         db_ports,
         db_image,
-        has_db
+        has_db,
+        ports
     }
     let template = fs.readFileSync(__dirname + "/docker-compose.njk").toString()
     let contents = Nunjucks.renderString(template, contentInfo)
@@ -69,8 +86,8 @@ export const buildDockerCompose = function(env: EnvironmentModelMessage) {
     return contents
 }
 
-export const buildVagrant = function(hostname: string){
-    const template = fs.readFileSync(__dirname + "/Vagrantfile.njk").toString()
-    const contents = Nunjucks.renderString(template, { "hostname": hostname})
-    return contents
-}
+// export const buildVagrant = function(hostname: string){
+//     let template = fs.readFileSync(__dirname + "/Vagrantfile.njk").toString()
+//     const contents = Nunjucks.renderString(template, { "hostname": hostname})
+//     return contents
+// }

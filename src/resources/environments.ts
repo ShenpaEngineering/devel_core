@@ -1,5 +1,5 @@
 import { ProjectModelMessage, EnvironmentModelMessage } from "../types"
-import { buildDockerCompose, buildDockerfile, buildVagrant } from "../dockerfiles"
+import { buildDockerCompose, buildDockerfile, buildPostinstallScript, buildQEMUConfig } from "../dockerfiles"
 import fs from 'fs'
 const fsExtra = require('fs-extra')
 
@@ -21,6 +21,9 @@ export function createSourcePath(path: string) {
     }
 }
 
+export function createEnvironment(){
+    return { "metadata": { "type": "environment"}}
+}
 
 export function createDockerCompose(env: EnvironmentModelMessage){
     return buildDockerCompose(env)
@@ -30,25 +33,25 @@ export function createDockerfile(env: EnvironmentModelMessage){
     return buildDockerfile(env)
 }
 
-function createVagrantfile(hostname: string){
-    return buildVagrant(hostname)
-}
 
-export function buildEnvironmentFolder(dockerFileContents:string, dockerComposeContents:string, sourcePath:string, env: EnvironmentModelMessage, hostname: string) {
-    console.log(dockerComposeContents)
+export function buildEnvironmentFolder(dockerFileContents:string, dockerComposeContents:string, sourcePath:string, env: ProjectModelMessage) {
     try {
-        const vagrantContents = createVagrantfile(hostname)
+        let qemuFileName = `${env.name}.yml`
         fsExtra.ensureFileSync(sourcePath + "/denv.rc")
         fsExtra.ensureFileSync(sourcePath + "/images/Dockerfile")
-        fsExtra.ensureFileSync(sourcePath + "/Vagrantfile")
         fsExtra.ensureFileSync(sourcePath + "/docker-compose.yml")
+        fsExtra.ensureFileSync(sourcePath + "/postinstall.sh")
+        fsExtra.ensureFileSync(sourcePath + "/"  + qemuFileName)
         fsExtra.ensureDirSync(sourcePath + "/src")
-        fs.writeFileSync(sourcePath + "/denv.rc", env.toString())
+        fs.writeFileSync(sourcePath + "/denv.rc", JSON.stringify(env))
+        fs.writeFileSync(sourcePath + "/" + qemuFileName, buildQEMUConfig(sourcePath))
+        fs.writeFileSync(sourcePath + "/postinstall.sh", buildPostinstallScript(env.environment!))
         fs.writeFileSync(sourcePath + "/images/Dockerfile", dockerFileContents)
         fs.writeFileSync(sourcePath + "/docker-compose.yml", dockerComposeContents)
-        fs.writeFileSync(sourcePath + "/Vagrantfile", vagrantContents)
+
         return true
     } catch (err){
+        console.log(err)
         return false
     }
 }

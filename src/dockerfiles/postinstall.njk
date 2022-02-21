@@ -1,0 +1,17 @@
+{% if language == 'Node' %}
+sudo apt-get install npm
+sudo npm install -g nodemon
+cd ./src
+npm install
+{% endif %}
+{% if language == 'Python' %}
+sudo apt-get install -y python3-pip
+cd ./src
+pip3 install -r requirements.txt
+{% endif %}
+{% if language == 'Ruby' %}
+sudo apt-get install rubygems
+cd ./src
+gem install bundler
+bundle install
+{% endif %}

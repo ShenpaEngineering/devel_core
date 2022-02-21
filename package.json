@@ -1,5 +1,5 @@
 {
-  "version": "0.1.37",
+  "version": "0.0.1",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -31,16 +31,16 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "@local/devtool_lib",
-  "author": "Shariq Torres",
-  "module": "dist/devtool_lib.esm.js",
+  "name": "devel_core",
+  "author": "Shenpa Engineering",
+  "module": "dist/devel_core.esm.js",
   "size-limit": [
     {
-      "path": "dist/devtool_lib.cjs.production.min.js",
+      "path": "dist/devel_core.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/devtool_lib.esm.js",
+      "path": "dist/devel_core.esm.js",
       "limit": "10 KB"
     }
   ],

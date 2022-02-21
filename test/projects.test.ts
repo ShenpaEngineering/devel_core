@@ -1,12 +1,7 @@
 import { Client } from '../src'
-import { JsonDB } from 'node-json-db';
 
 
-afterEach(function(){
-    const db = new JsonDB(__dirname + "/db/test_db_write.json")
-    db.push("/", {"projects":[]}, true)
-    db.save()
-})
+
 
 describe('project resource functions', () => {
     describe('createProject functions', ()  => {
@@ -44,29 +39,4 @@ describe('project resource functions', () => {
 
         })
     })
-
-    describe('the database functions for projects', () => {
-        describe('Client.projects.listProjects function', () => {
-            it('should return an array of ProjectModelMessages', () => {
-                let results = Client.projects.listProjects(__dirname + "/db/test_db.json")
-                expect(results.length).toEqual(1)
-                expect(results[0].metadata.type).toMatch("project")
-                expect(results[0].environment).toBe(undefined)
-            })
-        })
-
-        describe('Client.projects.saveProject function', () => {
-            it('should return true when a save is complete', () => {
-                let project = Client.projects.createProject("Example", "example.dev")
-                let result = Client.projects.saveProject(project, __dirname + "/db/test_db_write.json")
-                expect(result).toBe(true)
-            })
-
-            it('should return false when a save is not completed', () => {
-                let project = Client.projects.createProject("Example", "example.dev")
-                let result = Client.projects.saveProject(project, "//not/found/nofile.json")
-                expect(result).toBe(false)
-            })
-        })
-    })        
 })

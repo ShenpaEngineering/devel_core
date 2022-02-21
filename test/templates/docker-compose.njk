@@ -4,7 +4,9 @@ services:
     build:
       context: ./
       dockerfile: ./images/Dockerfile
-    command: {{start_command}}
+    container_name: web
+    volumes:
+     - './src/:/app/:rw'
     ports: 
       - "{{ports}}"
     {% if has_db %}
@@ -13,7 +15,7 @@ services:
     {% endif %}
     {% if has_db %}
     db:
-        image: {% db_image %}
+        image: {{ db_image }}
         ports:
             - "{{db_ports}}"
     {% endif %}
