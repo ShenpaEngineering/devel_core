@@ -1,0 +1,8 @@
+FROM python:{{version}}
+RUN mkdir app
+ADD ./src /app
+WORKDIR /app
+RUN pip install -r requirements.txt
+EXPOSE 3000
+VOLUME /app
+ENTRYPOINT [ "python", "server.py" ]

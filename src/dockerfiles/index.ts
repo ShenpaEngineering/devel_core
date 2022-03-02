@@ -7,12 +7,28 @@ function NodeEnv(vnum:(string)){
     return Nunjucks.renderString(contents.toString(), {version: vnum})
 }
 
+function RubyEnv(vnum:(string)){
+    let contents = fs.readFileSync(__dirname + "/dockerfile-ruby.njk")
+    return Nunjucks.renderString(contents.toString(), {version: vnum})
+}
+
+function PythonEnv(vnum:(string)){
+    let contents = fs.readFileSync(__dirname + "/dockerfile-python.njk")
+    return Nunjucks.renderString(contents.toString(), {version: vnum})
+}
+
 
 export const buildDockerfile = function(env: EnvironmentModelMessage){
     let fileContents = ''
     switch(env.language?.name){
         case "Node":
             fileContents = NodeEnv(env.language?.version)
+        break;
+        case "Ruby":
+            fileContents = RubyEnv(env.language?.version)
+        break;
+        case "Python":
+            fileContents = PythonEnv(env.language?.version)
         break;
         default:
             return new Error("We don't support that langauge.")
@@ -36,25 +52,9 @@ export const buildPostinstallScript = function(env: EnvironmentModelMessage) {
     let fileContents = Nunjucks.renderString(template, contentInfo)
     return fileContents
 }
-export const buildDockerCompose = function(env: EnvironmentModelMessage) {
-    let start_command = 'node server.js';
+export const buildDockerCompose = function() {
     let ports = "3000:3000"
-    switch(env.language?.name) {
-        case 'Node':
-            start_command = 'node server.js'
-        break;
-        case 'Python':
-            start_command = 'gunicorn server.py'
-        break;
-        case 'Go':
-            start_command = 'go run server.go'
-        break;
-        default:
-            return new Error("We don't suppor that language")
-    }
-
     let contentInfo = {
-        start_command,
         ports
     }
     let template = fs.readFileSync(__dirname + "/docker-compose.njk").toString()

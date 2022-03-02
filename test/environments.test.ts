@@ -78,24 +78,9 @@ describe('Environment resource functions', () => {
     })
 
     describe('createDockerCompose function', () => {
-        let env = {
-            "metadata": { "type": "environmnent"},
-
-            "application": {
-                "metadata": { "type": "application"},
-                "name": "Express",
-                "version": "1.0x"
-            },
-            "language": {
-                "metadata": { "type": "language"},
-                "name": "Node",
-                "version": "14.3"
-            },
-        }
         it('should return a string with compose file contents', () => {
-            let result = Client.environments.createDockerCompose(env)
+            let result = Client.environments.createDockerCompose()
             expect(result).toMatch(/version\: \'3.7\'/)
-            expect(result).toEqual(expect.not.stringMatching(/db\:/))
         })
         
     })

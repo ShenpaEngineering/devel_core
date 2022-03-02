@@ -1,0 +1,9 @@
+FROM ruby:{{version}}
+RUN mkdir app
+ADD ./src /app
+WORKDIR /app
+RUN gem install sinatra-contrib
+RUN bundle install
+EXPOSE 3000
+VOLUME /app
+ENTRYPOINT [ "ruby", "server.rb" ]

@@ -25,8 +25,8 @@ export function createEnvironment(){
     return { "metadata": { "type": "environment"}}
 }
 
-export function createDockerCompose(env: EnvironmentModelMessage){
-    return buildDockerCompose(env)
+export function createDockerCompose(){
+    return buildDockerCompose()
 }
 
 export function createDockerfile(env: EnvironmentModelMessage){
