@@ -1,5 +1,5 @@
 {
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -12,8 +12,8 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build && cp ./src/dockerfiles/docker-compose.njk ./dist/docker-compose.njk && cp ./src/dockerfiles/dockerfile-node.njk ./dist/dockerfile-node.njk && cp ./src/dockerfiles/qemu-config.njk ./dist/qemu-config.njk && cp ./src/dockerfiles/postinstall.njk ./dist/postinstall.njk",
-    "prepare": "tsdx build && cp ./src/dockerfiles/docker-compose.njk ./dist/docker-compose.njk && cp ./src/dockerfiles/dockerfile-node.njk ./dist/dockerfile-node.njk && cp ./src/dockerfiles/qemu-config.njk ./dist/qemu-config.njk && cp ./src/dockerfiles/postinstall.njk ./dist/postinstall.njk",
+    "build": "tsdx build && cp ./src/dockerfiles/docker-compose.njk ./dist/docker-compose.njk && cp ./src/dockerfiles/dockerfile-node.njk ./dist/dockerfile-node.njk && cp ./src/dockerfiles/dockerfile-ruby.njk ./dist/dockerfile-ruby.njk && cp ./src/dockerfiles/dockerfile-python.njk ./dist/dockerfile-python.njk && cp ./src/dockerfiles/qemu-config.njk ./dist/qemu-config.njk && cp ./src/dockerfiles/postinstall.njk ./dist/postinstall.njk",
+    "prepare": "tsdx build && cp ./src/dockerfiles/docker-compose.njk ./dist/docker-compose.njk && cp ./src/dockerfiles/dockerfile-node.njk ./dist/dockerfile-node.njk && cp ./src/dockerfiles/dockerfile-ruby.njk ./dist/dockerfile-ruby.njk && cp ./src/dockerfiles/dockerfile-python.njk ./dist/dockerfile-python.njk && cp ./src/dockerfiles/qemu-config.njk ./dist/qemu-config.njk && cp ./src/dockerfiles/postinstall.njk ./dist/postinstall.njk",
     "test": "tsdx test",
     "lint": "yarn lint",
     "size": "size-limit",
