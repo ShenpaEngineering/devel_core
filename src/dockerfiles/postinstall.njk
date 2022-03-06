@@ -1,5 +1,5 @@
 {% if language == 'Node' %}
-sudo apt-get install npm
+sudo apt-get -y install npm
 sudo npm install -g nodemon
 cd ./src
 npm install
@@ -10,9 +10,15 @@ cd ./src
 pip3 install -r requirements.txt
 {% endif %}
 {% if language == 'Ruby' %}
-sudo apt-get install rubygems
+sudo apt-get install -y rubygems
 cd ./src
-gem install bundler
-gem install sinatra-contrib
+sudo gem install bundler
+sudo gem install sinatra
+sudo gem install thin
+sudo gem install puma
+sudo gem install reel
+sudo gem install http
+sudo gem install webrick
+sudo gem install sinatra-contrib
 bundle install
 {% endif %}

@@ -2,6 +2,13 @@ FROM ruby:{{version}}
 RUN mkdir app
 ADD ./src /app
 WORKDIR /app
+RUN gem install bundler
+RUN gem install sinatra
+RUN gem install thin
+RUN gem install puma
+RUN gem install reel
+RUN gem install http
+RUN gem install webrick
 RUN gem install sinatra-contrib
 RUN bundle install
 EXPOSE 3000
